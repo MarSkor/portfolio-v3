@@ -1,49 +1,56 @@
-"use client";
 import Link from "next/link";
-import { useState } from "react";
 
 const FOOTER_LINKS = [
   { label: "Home", to: "/" },
-  { label: "Work", to: "/projects" },
+  { label: "Work", to: "/work" },
   { label: "Blog", to: "/blog" },
 ];
 
 const Footer = () => {
   const year = new Date().getFullYear();
-  const [currently, setCurrently] = useState(null);
-
-  // useEffect(() => {
-  //   base44.entities.CurrentlyItem.list('-created_date', 1)
-  //     .then((items) => setCurrently(items[0] || null))
-  //     .catch(() => {});
-  // }, []);
 
   return (
     <footer className="border-t border-border">
       <div className="mx-auto max-w-monograph px-6 lg:px-10">
-        {/* Creative strip */}
-        {/* <div className="flex flex-col items-center justify-between gap-4 border-b border-border py-6 sm:flex-row">
-          {currently ? (
-            <Link
-              href="/#about"
-              className="link-underline group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <Sparkles className="h-4 w-4 text-accent transition-transform group-hover:rotate-12" />
-              <span className="label-meta">Currently</span>
-              <span className="font-medium text-foreground">
-                {currently.value}
-              </span>
-            </Link>
-          ) : (
-            <span className="label-meta">Currently —</span>
-          )}
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            Made by hand, not by template
-          </p>
-        </div> */}
+        <section className="flex flex-col items-center justify-between gap-4 border-b border-border py-8 sm:flex-row">
+          <p className="label-meta">Portfolio Archive</p>
+          <div className="flex items-center gap-6">
+            {[
+              {
+                label: "Vol. 01",
+                year: "2023",
+                href: "https://example.com/vol-01", //to be updated
+              },
+              {
+                label: "Vol. 02",
+                year: "2024",
+                href: "https://example.com/vol-02", //to be updated
+              },
+              { label: "Vol. 03", year: "2026", href: null },
+            ].map((vol) =>
+              vol.href ? (
+                <Link
+                  key={vol.label}
+                  href={vol.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {vol.label}
+                </Link>
+              ) : (
+                <span
+                  key={vol.label}
+                  className="text-sm font-medium text-foreground"
+                >
+                  {vol.label}
+                </span>
+              ),
+            )}
+          </div>
+        </section>
 
-        {/* Main footer row */}
-        <div className="flex flex-col items-center justify-between gap-4 py-8 sm:flex-row">
+        <section className="flex flex-col items-center justify-between gap-4 py-8 sm:flex-row">
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
             © {year} Martine Skorbakk
           </p>
@@ -59,9 +66,9 @@ const Footer = () => {
             ))}
           </div>
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            Built with care
+            Built with a mug of cocoa
           </p>
-        </div>
+        </section>
       </div>
     </footer>
   );

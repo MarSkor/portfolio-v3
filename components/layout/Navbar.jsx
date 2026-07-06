@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "../ui/ThemeToggle";
@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
-  { label: "Work", to: "/projects" },
+  { label: "Work", to: "/work" },
   { label: "About", to: "/#about" },
   { label: "Blog", to: "/blog" },
   { label: "Contact", to: "/#contact" },
@@ -18,6 +18,13 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  const headerRef = useRef(null);
+
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setMobileOpen(false);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -27,21 +34,35 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
+    if (!mobileOpen) return;
+
+    const handleClickOutside = (e) => {
+      if (headerRef.current && !headerRef.current.contains(e.target)) {
+        setMobileOpen(false);
+      }
+    };
+    const handleEscape = (e) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [mobileOpen]);
 
   const handleAnchor = (to) => {
-    if (to.includes("#")) {
-      const [path, hash] = to.split("#");
-      if (path && path !== "/" && pathname !== path) return;
-      const el = document.getElementById(hash);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }
+    const hash = to.split("#")[1];
+    const el = document.getElementById(hash);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      ref={headerRef}
+      className={`fixed inset-x-0 top-0 z-110 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         scrolled
           ? "border-b border-border bg-background/80 backdrop-blur-xl"
           : "border-b border-transparent bg-transparent"
@@ -56,8 +77,9 @@ const Navbar = () => {
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) =>
-            link.to.includes("#") ? (
+          {NAV_LINKS.map((link) => {
+            const isHomeAnchor = link.to.includes("#") && pathname === "/";
+            return isHomeAnchor ? (
               <button
                 key={link.label}
                 onClick={() => handleAnchor(link.to)}
@@ -73,8 +95,8 @@ const Navbar = () => {
               >
                 {link.label}
               </Link>
-            ),
-          )}
+            );
+          })}
           <ThemeToggle />
         </div>
 
@@ -105,6 +127,7 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-1 px-6 py-6">
               {NAV_LINKS.map((link, i) => {
+                const isHomeAnchor = link.to.includes("#") && pathname === "/";
                 const content = (
                   <span className="block border-b border-border/60 py-3 text-base font-medium text-foreground">
                     {link.label}
@@ -121,7 +144,7 @@ const Navbar = () => {
                       ease: [0.16, 1, 0.3, 1],
                     }}
                   >
-                    {link.to.includes("#") ? (
+                    {isHomeAnchor ? (
                       <button
                         onClick={() => handleAnchor(link.to)}
                         className="w-full text-left"
