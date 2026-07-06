@@ -1,42 +1,63 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
+
+const HOVER_SELECTOR =
+  "a, button, input, textarea, select, [role='button'], [data-cursor-hover]";
 
 export default function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
-  const cursorSize = isHovered ? 60 : 16;
+  const [isVisible, setIsVisible] = useState(false);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
 
-  // Smooths the cursor movement with spring physics
-  const springConfig = { stiffness: 150, damping: 15, mass: 0.1 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
+  const springConfig = { stiffness: 500, damping: 32, mass: 0.3 };
+  const ringX = useSpring(mouseX, springConfig);
+  const ringY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const moveCursor = (e) => {
-      mouseX.set(e.clientX - cursorSize / 2);
-      mouseY.set(e.clientY - cursorSize / 2);
-    };
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    window.addEventListener("mousemove", moveCursor);
-    return () => window.removeEventListener("mousemove", moveCursor);
-  }, [cursorSize, mouseX, mouseY]);
+    const handleMove = (e) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+      setIsVisible(true);
+    };
+    const handleOver = (e) => {
+      setIsHovered(Boolean(e.target.closest(HOVER_SELECTOR)));
+    };
+    const handleLeaveWindow = () => setIsVisible(false);
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseover", handleOver);
+    document.documentElement.addEventListener("mouseleave", handleLeaveWindow);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseover", handleOver);
+      document.documentElement.removeEventListener(
+        "mouseleave",
+        handleLeaveWindow,
+      );
+    };
+  }, [mouseX, mouseY]);
 
   return (
     <motion.div
-      className="fixed top-0 left-0 bg-blue-500 rounded-full pointer-events-none z-150 mix-blend-difference"
-      style={{
-        width: cursorSize,
-        height: cursorSize,
-        x: cursorX,
-        y: cursorY,
-      }}
+      className="pointer-events-none fixed left-0 top-0 z-150 hidden rounded-full border border-accent/70 shadow-[0_0_16px_hsl(var(--accent)/0.35)] md:block"
+      style={{ x: ringX, y: ringY, translateX: "-50%", translateY: "-50%" }}
+      initial={false}
       animate={{
-        width: cursorSize,
-        height: cursorSize,
+        width: isHovered ? 56 : 28,
+        height: isHovered ? 56 : 28,
+        borderWidth: isHovered ? 1 : 1.5,
+        backgroundColor: isHovered
+          ? "hsl(var(--accent) / 0.12)"
+          : "hsl(var(--accent) / 0)",
+        opacity: isVisible ? 1 : 0,
       }}
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
     />
   );
 }
