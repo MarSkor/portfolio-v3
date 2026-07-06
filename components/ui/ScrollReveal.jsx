@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
+import { useInView } from "react-intersection-observer";
 
 export default function ScrollReveal({
   children,
@@ -7,32 +8,27 @@ export default function ScrollReveal({
   delay = 0,
   as: Tag = "div",
 }) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
+  const { ref, inView } = useInView({
+    threshold: 0.12,
+    rootMargin: "0px 0px -8% 0px",
+    triggerOnce: true,
+  });
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const Component = motion[Tag] || motion.div;
 
   return (
-    <Tag
+    <Component
       ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{
+        duration: 0.9,
+        delay: delay / 1000,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className={className}
     >
       {children}
-    </Tag>
+    </Component>
   );
 }
