@@ -1,17 +1,21 @@
 import Link from "next/link";
-import { format } from "date-fns";
 
 const BlogRow = ({ post }) => {
   const date = post.publishedAt
-    ? format(new Date(post.publishedAt), "MMM d, yyyy")
+    ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
     : "";
+
   return (
     <Link
-      href={`/blog/${post.id}`}
+      href={`/blog/${post.slug.current}`}
       className="group grid grid-cols-1 gap-2 border-t border-border py-8 transition-colors duration-300 first:border-t-0 sm:grid-cols-12 sm:gap-6"
     >
       <div className="sm:col-span-3">
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent-teal">
+        <p className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
           {date}
         </p>
         {post.readingTime ? (
@@ -21,12 +25,16 @@ const BlogRow = ({ post }) => {
         ) : null}
       </div>
       <div className="sm:col-span-9">
-        <h3 className="link-underline inline font-heading text-2xl font-medium leading-tight text-foreground transition-colors group-hover:text-accent md:text-3xl">
+        <h3 className="link-underline inline font-heading text-2xl font-bold leading-tight text-foreground transition-colors group-hover:text-accent md:text-3xl">
           {post.title}
         </h3>
         {post.excerpt ? (
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
             {post.excerpt}
+          </p>
+        ) : post.description ? (
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
+            {post.description}
           </p>
         ) : null}
         {post.tags?.length > 0 ? (
