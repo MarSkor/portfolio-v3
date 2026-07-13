@@ -19,11 +19,11 @@ export default async function RootLayout({ children }) {
       <CustomCursor />
       <div className="relative flex min-h-screen flex-col bg-background">
         <div
-          className="grain-texture pointer-events-none fixed inset-0 z-100 opacity-[0.10] mix-blend-multiply dark:opacity-[0.10] dark:mix-blend-screen"
+          className="grain-texture pointer-events-none fixed inset-0 z-10 opacity-[0.10] mix-blend-multiply dark:opacity-[0.10] dark:mix-blend-screen"
           aria-hidden="true"
         />
         <Navbar />
-        <main className="relative z-10 flex-1">{children}</main>
+        <main className="relative flex-1">{children}</main>
         <Footer />
       </div>
     </ThemeProvider>

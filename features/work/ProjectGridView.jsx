@@ -6,17 +6,17 @@ import { urlFor } from "@/lib/sanity";
 
 const ProjectGridView = ({ projects }) => {
   return (
-    <article className="relative z-0 grid grid-cols-1 gap-6 md:grid-cols-2">
+    <article className="relative z-20 grid grid-cols-1 gap-6 md:grid-cols-2">
       {projects.map((project, i) => (
         <ScrollReveal key={project._id} delay={i * 50}>
-          <section className="group relative z-0 flex h-full flex-col overflow-hidden border border-border bg-card shadow-[0_2px_12px_-4px_rgba(0,0,0,0.10)] transition-all duration-500 hover:-translate-y-1 hover:border-foreground/40 hover:shadow-[0_16px_48px_-16px_rgba(0,0,0,0.18)]">
+          <section className="group relative z-20 flex h-full flex-col overflow-hidden border border-border bg-card shadow-[0_2px_12px_-4px_rgba(0,0,0,0.10)] transition-all duration-500 hover:-translate-y-1 hover:border-foreground/40 hover:shadow-[0_16px_48px_-16px_rgba(0,0,0,0.18)]">
             <Link
               href={`/work/${project.slug?.current}`}
-              className="absolute inset-0 z-10"
+              className="absolute inset-0 z-100"
               aria-label={`View ${project.title} project`}
             />
 
-            <section className="relative z-20 grain-exempt aspect-4/3 overflow-hidden bg-secondary pointer-events-none">
+            <section className="relative grain-exempt aspect-4/3 overflow-hidden bg-secondary pointer-events-none">
               {project.thumbnail ? (
                 <Image
                   src={urlFor(project.thumbnail).width(800).height(600).url()}
@@ -33,6 +33,11 @@ const ProjectGridView = ({ projects }) => {
             </section>
 
             <section className="relative z-20 flex flex-1 flex-col gap-4 p-6 pointer-events-none">
+              <div
+                className="grain-texture pointer-events-none absolute inset-0 z-0 opacity-[0.10] mix-blend-multiply dark:mix-blend-screen"
+                aria-hidden="true"
+              />
+
               <div className="flex items-center justify-between">
                 <span className="label-meta">
                   {String(i + 1).padStart(2, "0")} / {project.year || "—"}
