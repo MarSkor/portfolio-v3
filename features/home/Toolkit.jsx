@@ -1,109 +1,92 @@
-import { Code2, Component, Wrench, Palette } from "lucide-react";
+import { Terminal, Component, Wrench, PenTool, Code2 } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-
-const CATEGORY_ORDER = ["Languages", "Frameworks", "Tools", "Design"];
+import { getToolkitContent } from "@/lib/sanity";
 
 const CATEGORY_META = {
-  Languages: { icon: Code2, accent: "text-accent" },
-  Frameworks: { icon: Component, accent: "text-accent-teal" },
-  Tools: { icon: Wrench, accent: "text-accent" },
-  Design: { icon: Palette, accent: "text-accent-teal" },
+  Languages: {
+    icon: Terminal,
+    gradient: "from-accent to-accent",
+    bar: "bg-accent",
+  },
+  Frameworks: {
+    icon: Component,
+    gradient: "from-accent-teal to-accent-teal",
+    bar: "bg-accent-teal",
+  },
+  Tools: {
+    icon: Wrench,
+    gradient: "from-accent to-accent-teal",
+    bar: "bg-gradient-to-r from-accent to-accent-teal",
+  },
+  Design: {
+    icon: PenTool,
+    gradient: "from-accent-teal to-accent",
+    bar: "bg-gradient-to-r from-accent-teal to-accent",
+  },
 };
 
-const Toolkit = () => {
-  const skills = [
-    {
-      id: "1",
-      name: "JavaScript",
-      category: "Languages",
-      order: 1,
-    },
-    {
-      id: "2",
-      name: "TypeScript",
-      category: "Languages",
-      order: 2,
-    },
-    {
-      id: "3",
-      name: "React",
-      category: "Frameworks",
-      order: 1,
-    },
-    {
-      id: "4",
-      name: "Next.js",
-      category: "Frameworks",
-      order: 2,
-    },
-    {
-      id: "5",
-      name: "Tailwind CSS",
-      category: "Tools",
-      order: 1,
-    },
-    {
-      id: "6",
-      name: "Figma",
-      category: "Design",
-      order: 1,
-    },
-    {
-      id: "7",
-      name: "Adobe XD",
-      category: "Design",
-      order: 2,
-    },
-  ];
+const Toolkit = async () => {
+  const toolkit = await getToolkitContent();
+  const categories =
+    toolkit?.categories?.filter((c) => c.skills?.length > 0) || [];
 
-  const grouped = CATEGORY_ORDER.map((cat) => ({
-    category: cat,
-    items: skills
-      .filter((s) => s.category === cat)
-      .sort((a, b) => (a.order || 0) - (b.order || 0)),
-  })).filter((g) => g.items.length > 0);
+  if (categories.length === 0) return null;
 
   return (
     <section id="skills" className="border-t border-border py-24 md:py-32">
       <div className="mx-auto max-w-monograph px-6 lg:px-10">
         <ScrollReveal>
           <p className="label-meta mb-4">Toolkit</p>
-          <h2 className="font-heading text-4xl font-bold leading-tight text-foreground md:text-5xl">
+          <h2 className="font-heading text-4xl md:text-5xl font-semibold leading-tight text-foreground ">
             Skills &amp; stack
           </h2>
         </ScrollReveal>
 
         <ScrollReveal delay={80} className="mt-16">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {grouped.map((group, gi) => {
-              const meta = CATEGORY_META[group.category];
+          <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {categories.map((group, gi) => {
+              const meta = CATEGORY_META[group.name];
               const Icon = meta?.icon || Code2;
               return (
-                <ScrollReveal key={group.category} delay={gi * 80}>
-                  <div className="group flex h-full flex-col border border-border bg-card p-7 transition-all duration-500 hover:-translate-y-1 hover:border-foreground/30 hover:shadow-[0_16px_48px_-20px_rgba(0,0,0,0.15)]">
-                    <div className="mb-6 flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center border border-border transition-colors duration-500 group-hover:border-foreground/30">
-                        <Icon
-                          className={`h-4 w-4 ${meta?.accent || "text-accent"}`}
-                        />
-                      </div>
-                      <p className="label-meta">{group.category}</p>
-                    </div>
-                    <ul className="flex flex-wrap gap-2">
-                      {group.items.map((skill) => (
-                        <li
-                          key={skill.id}
-                          className="border border-border px-3 py-1 font-mono text-xs text-muted-foreground transition-colors duration-300 hover:border-foreground/40 hover:text-foreground"
+                <ScrollReveal key={group.name} delay={gi * 80}>
+                  <div className="group relative flex h-full flex-col overflow-hidden border border-border bg-card transition-all duration-500 hover:-translate-y-1.5 hover:border-foreground/30 hover:shadow-[0_20px_60px_-24px_rgba(0,0,0,0.2)]">
+                    <div
+                      className={`absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 ${meta?.bar || "bg-accent"} transition-transform duration-500 group-hover:scale-x-100`}
+                    />
+
+                    <section className="flex flex-1 flex-col p-7">
+                      <div className="mb-6 flex items-start justify-between">
+                        <div
+                          className={`flex h-12 w-12 items-center justify-center bg-linear-to-br ${meta?.gradient || "from-accent to-accent-teal"} transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}
                         >
-                          {skill.name}
-                        </li>
-                      ))}
-                    </ul>
+                          <Icon className="h-6 w-6 text-white" />
+                        </div>
+                        <span className="label-meta mt-1">
+                          {String(group.skills.length).padStart(2, "0")}
+                        </span>
+                      </div>
+
+                      <p className="label-meta text-sm mb-5">{group.name}</p>
+
+                      <ul className="space-y-2.5">
+                        {group.skills.map((skill) => (
+                          <li
+                            key={skill}
+                            className="group/item flex items-center gap-3 text-base text-muted-foreground transition-colors duration-300 hover:text-foreground"
+                          >
+                            <span
+                              className={`h-px w-3 shrink-0 ${meta?.bar || "bg-accent"} transition-all duration-300 group-hover/item:w-5`}
+                            />
+                            {skill}
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
                   </div>
                 </ScrollReveal>
               );
             })}
-          </div>
+          </section>
         </ScrollReveal>
       </div>
     </section>

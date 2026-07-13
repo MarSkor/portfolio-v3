@@ -12,7 +12,6 @@ const WorkFilters = ({ projects }) => {
   const [view, setView] = useState("list");
   const [isMobile, setIsMobile] = useState(true);
 
-  // Check if mobile on mount and resize
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768;

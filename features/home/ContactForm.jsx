@@ -16,11 +16,20 @@ const ContactForm = () => {
     setStatus("sending");
     setError("");
     try {
-      await base44.integrations.Core.SendEmail({
-        to: "hello@alexrivera.dev",
-        subject: `New message from ${form.name}`,
-        body: `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
-      });
+      const res = await fetch(
+        `https://formspree.io/f/${process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID}`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        },
+      );
+
+      if (!res.ok) throw new Error("Formspree request failed");
+
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
     } catch {
@@ -36,7 +45,7 @@ const ContactForm = () => {
           Thanks for reaching out.
         </p>
         <p className="mt-2 text-sm text-muted-foreground">
-          I'll get back to you within a day or two.
+          I&apos;ll get back to you within a day or two.
         </p>
         <button
           onClick={() => setStatus("idle")}
