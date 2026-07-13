@@ -12,7 +12,7 @@ const BlogRow = ({ post }) => {
   return (
     <Link
       href={`/blog/${post.slug.current}`}
-      className="group grid grid-cols-1 gap-2 border-t border-border py-8 transition-colors duration-300 first:border-t-0 sm:grid-cols-12 sm:gap-6"
+      className="group grid grid-cols-1 gap-2 py-8 transition-colors duration-300 sm:grid-cols-12 sm:gap-6"
     >
       <div className="sm:col-span-3">
         <p className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
