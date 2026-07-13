@@ -2,31 +2,10 @@ import Link from "next/link";
 import BlogRow from "@/features/blog/BlogRow";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { ArrowRight } from "lucide-react";
+import { getFeaturedPosts } from "@/lib/sanity";
 
-const Writing = () => {
-  const posts = [
-    {
-      id: "1",
-      title: "The power of a good design system",
-      slug: "the-power-of-a-good-design-system",
-      excerpt:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
-      readingTime: "5 min",
-      publishedAt: "2022-01-01",
-      tags: ["design", "ux"],
-    },
-    {
-      id: "2",
-      title: "The power of a good design system",
-      slug: "the-power-of-a-good-design-system",
-      excerpt:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
-      readingTime: "5 min",
-      publishedAt: "2022-01-01",
-      tags: ["design", "ux"],
-    },
-  ];
-  const loading = false;
+const Writing = async () => {
+  const posts = await getFeaturedPosts();
 
   return (
     <section id="blog" className="border-t border-border py-24 md:py-32">
@@ -34,7 +13,7 @@ const Writing = () => {
         <ScrollReveal className="mb-16 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="label-meta mb-4">Writing</p>
-            <h2 className="font-heading text-4xl font-bold leading-tight text-foreground md:text-5xl">
+            <h2 className="font-heading text-4xl md:text-5xl font-semibold leading-tight text-foreground ">
               From the journal
             </h2>
           </div>
@@ -47,16 +26,7 @@ const Writing = () => {
           </Link>
         </ScrollReveal>
 
-        {loading ? (
-          <div className="space-y-8">
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                className="h-20 animate-pulse border-t border-border"
-              />
-            ))}
-          </div>
-        ) : posts.length === 0 ? (
+        {posts.length === 0 ? (
           <p className="text-muted-foreground">
             No posts yet — check back soon.
           </p>
@@ -64,7 +34,7 @@ const Writing = () => {
           <ScrollReveal delay={80}>
             <div>
               {posts.map((post) => (
-                <BlogRow key={post.id} post={post} />
+                <BlogRow key={post._id} post={post} />
               ))}
             </div>
           </ScrollReveal>
