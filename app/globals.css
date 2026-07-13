@@ -66,6 +66,7 @@
   --input: 0 0% 90%;
   --ring: 0 0% 7%;
   --radius: 0.25rem;
+  --spotlight-opacity: 0.22;
 
   --font-display: "Cabinet Grotesk", sans-serif;
   --font-heading: "Cabinet Grotesk", sans-serif;
@@ -92,6 +93,7 @@
   --border: 0 0% 18%;
   --input: 0 0% 18%;
   --ring: 36 14% 93%;
+  --spotlight-opacity: 0.12;
 }
 
 @layer base {
