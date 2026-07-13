@@ -10,7 +10,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border">
+    <footer className="border-t border-border mt-12">
       <div className="mx-auto max-w-monograph px-6 lg:px-10">
         <section className="flex flex-col items-center justify-between gap-4 border-b border-border py-8 sm:flex-row">
           <p className="label-meta">Portfolio Archive</p>
