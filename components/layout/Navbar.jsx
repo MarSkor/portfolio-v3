@@ -59,31 +59,56 @@ const Navbar = () => {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setMobileOpen(false);
+    } else {
+      window.location.href = "/";
+    }
+  };
+
   return (
     <header
       ref={headerRef}
       className={`fixed inset-x-0 top-0 z-110 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-xl"
+          ? "border-b border-border bg-background/90 backdrop-blur-md will-change-[backdrop-filter]"
           : "border-b border-transparent bg-transparent"
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-monograph items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
-          className="font-display text-sm font-bold uppercase tracking-[0.18em] text-foreground"
+          onClick={handleHomeClick}
+          className="font-display text-sm font-bold uppercase tracking-[0.18em] text-foreground transition-colors hover:text-accent cursor-pointer"
         >
           Martine
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => {
+            if (link.to === "/") {
+              return (
+                <Link
+                  key={link.label}
+                  href="/"
+                  onClick={handleHomeClick}
+                  className="link-underline text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </Link>
+              );
+            }
+
             const isHomeAnchor = link.to.includes("#") && pathname === "/";
+
             return isHomeAnchor ? (
               <button
                 key={link.label}
                 onClick={() => handleAnchor(link.to)}
-                className="link-underline text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className="cursor-pointer link-underline text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
                 {link.label}
               </button>
@@ -98,7 +123,7 @@ const Navbar = () => {
             );
           })}
           <ThemeToggle />
-        </div>
+        </ul>
 
         <div className="flex items-center gap-3 md:hidden">
           <ThemeToggle />
@@ -125,14 +150,16 @@ const Navbar = () => {
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden border-t border-border bg-background md:hidden"
           >
-            <div className="flex flex-col gap-1 px-6 py-6">
+            <ul className="flex flex-col gap-1 px-6 py-6">
               {NAV_LINKS.map((link, i) => {
                 const isHomeAnchor = link.to.includes("#") && pathname === "/";
+
                 const content = (
                   <span className="block border-b border-border/60 py-3 text-base font-medium text-foreground">
                     {link.label}
                   </span>
                 );
+
                 return (
                   <motion.div
                     key={link.label}
@@ -144,7 +171,15 @@ const Navbar = () => {
                       ease: [0.16, 1, 0.3, 1],
                     }}
                   >
-                    {isHomeAnchor ? (
+                    {link.to === "/" ? (
+                      <Link
+                        href="/"
+                        onClick={handleHomeClick}
+                        className="block"
+                      >
+                        {content}
+                      </Link>
+                    ) : isHomeAnchor ? (
                       <button
                         onClick={() => handleAnchor(link.to)}
                         className="w-full text-left"
@@ -157,7 +192,7 @@ const Navbar = () => {
                   </motion.div>
                 );
               })}
-            </div>
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
