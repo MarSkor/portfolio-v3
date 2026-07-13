@@ -302,6 +302,24 @@ export const project = defineType({
     }),
 
     defineField({
+      name: "appIcon",
+      title: "App icon",
+      type: "image",
+      group: "media",
+      description:
+        "Square app icon shown in the homepage Side Projects grid instead of the thumbnail. Only applies to mobile projects — falls back to thumbnail if empty.",
+      options: { hotspot: true },
+      fields: [
+        {
+          name: "alt",
+          title: "Alt text",
+          type: "string",
+        },
+      ],
+      hidden: ({ document }) => document?.projectType !== "mobile",
+    }),
+
+    defineField({
       name: "processImages",
       title: "Process images",
       type: "array",
