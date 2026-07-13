@@ -8,10 +8,12 @@ const HOVER_SELECTOR =
 export default function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
+  // Position lags the real cursor slightly (the "trailing ring" feel).
   const springConfig = { stiffness: 500, damping: 32, mass: 0.3 };
   const ringX = useSpring(mouseX, springConfig);
   const ringY = useSpring(mouseY, springConfig);
@@ -24,14 +26,21 @@ export default function CustomCursor() {
       mouseY.set(e.clientY);
       setIsVisible(true);
     };
+
     const handleOver = (e) => {
       setIsHovered(Boolean(e.target.closest(HOVER_SELECTOR)));
     };
+
     const handleLeaveWindow = () => setIsVisible(false);
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
 
     window.addEventListener("mousemove", handleMove);
     window.addEventListener("mouseover", handleOver);
     document.documentElement.addEventListener("mouseleave", handleLeaveWindow);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMove);
@@ -40,8 +49,11 @@ export default function CustomCursor() {
         "mouseleave",
         handleLeaveWindow,
       );
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [mouseX, mouseY]);
+
+  const shouldHide = scrolled && mouseY.get() < 64;
 
   return (
     <motion.div
@@ -55,7 +67,7 @@ export default function CustomCursor() {
         backgroundColor: isHovered
           ? "hsl(var(--accent) / 0.12)"
           : "hsl(var(--accent) / 0)",
-        opacity: isVisible ? 1 : 0,
+        opacity: isVisible && !shouldHide ? 1 : 0,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
     />
