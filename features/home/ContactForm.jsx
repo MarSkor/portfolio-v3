@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { Check, Send } from "lucide-react";
+import { motion } from "motion/react";
 
 const ContactForm = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -40,20 +41,36 @@ const ContactForm = () => {
 
   if (status === "success") {
     return (
-      <div className="border border-border bg-card p-8 text-center">
-        <p className="font-heading text-xl text-foreground">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col items-center border border-border bg-card p-8 text-center"
+      >
+        <motion.div
+          initial={{ scale: 0.6, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.1, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-teal/15 text-accent-teal"
+        >
+          <Check className="h-6 w-6" />
+        </motion.div>
+
+        <p className="mt-5 font-heading text-xl text-foreground">
           Thanks for reaching out.
         </p>
         <p className="mt-2 text-sm text-muted-foreground">
           I&apos;ll get back to you within a day or two.
         </p>
+
         <button
+          type="button"
           onClick={() => setStatus("idle")}
-          className="link-underline mt-4 text-sm font-medium text-foreground"
+          className="link-underline mt-6 text-sm font-medium text-foreground"
         >
           Send another message
         </button>
-      </div>
+      </motion.div>
     );
   }
 

@@ -17,7 +17,7 @@ const Contact = () => {
           <article>
             <ScrollReveal>
               <p className="label-meta mb-4">Contact</p>
-              <h2 className="font-heading text-4xl md:text-5xl font-semibold leading-tight text-foreground ">
+              <h2 className="font-heading text-4xl md:text-5xl font-semibold leading-tight text-foreground">
                 Let&apos;s make something that feels right.
               </h2>
             </ScrollReveal>
