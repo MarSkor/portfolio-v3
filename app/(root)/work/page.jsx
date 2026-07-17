@@ -13,8 +13,6 @@ export const metadata = {
 const WorkContent = async () => {
   const projects = await getProjects();
 
-  console.log("projects", projects);
-
   return <WorkFilters projects={projects} />;
 };
 
