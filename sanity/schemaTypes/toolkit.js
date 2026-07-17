@@ -3,7 +3,13 @@ import { defineField, defineType } from "sanity";
 // Keep in sync with CATEGORY_META in features/home/Toolkit.jsx, which maps
 // each of these names to an icon + accent color in code (not stored here —
 // you can't store a React icon component in a CMS field).
-const CATEGORY_OPTIONS = ["Languages", "Frameworks", "Tools", "Design"];
+const CATEGORY_OPTIONS = [
+  "Languages & Frameworks",
+  // "Frameworks",
+  "Tools",
+  "Design",
+  "Development",
+];
 
 export const toolkit = defineType({
   name: "toolkit",
