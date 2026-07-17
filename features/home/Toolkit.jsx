@@ -3,16 +3,21 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 import { getToolkitContent } from "@/lib/sanity";
 
 const CATEGORY_META = {
-  Languages: {
+  "Languages & Frameworks": {
     icon: Terminal,
     gradient: "from-accent to-accent",
     bar: "bg-accent",
   },
-  Frameworks: {
+  Development: {
     icon: Component,
-    gradient: "from-accent-teal to-accent-teal",
-    bar: "bg-accent-teal",
+    gradient: "from-accent to-accent",
+    bar: "bg-accent",
   },
+  // Frameworks: {
+  //   icon: Component,
+  //   gradient: "from-accent-teal to-accent-teal",
+  //   bar: "bg-accent-teal",
+  // },
   Tools: {
     icon: Wrench,
     gradient: "from-accent to-accent-teal",
