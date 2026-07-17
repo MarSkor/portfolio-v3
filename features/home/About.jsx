@@ -1,82 +1,100 @@
-// import { base44 } from '@/api/base44Client';
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import PortableText from "@/components/ui/PortableText";
+import { getAboutContent } from "@/lib/sanity";
+import TextTicker from "./TextTicker";
 
-const TYPE_LABELS = {
-  reading: "Reading",
-  listening: "Listening",
-  obsessing: "Obsessing over",
-  fueling: "Fueling on",
-};
+// const MILESTONES = [
+//   {
+//     version: "v1.0.0",
+//     note: "Wrote first line of code, had no idea what I was doing.",
+//   },
+//   {
+//     version: "v2.0.0",
+//     note: "Learned React. Refused to shut up about it.",
+//   },
+//   {
+//     version: "v3.0.0",
+//     note: "Started caring more about the 1px border than the deadline.",
+//   },
+// ];
 
-const About = () => {
+// const PRINCIPLES = [
+//   "I sweat the 1px border.",
+//   "If it's not accessible, it's not finished.",
+//   "Delight lives in the details people almost miss.",
+//   "Ship it, then make it feel alive.",
+// ];
+
+const PRINCIPLES = [
+  "I sweat the 1px border.",
+  "Accessible by default.",
+  "Simple tools, thoughtful execution.",
+  "Make the web feel alive.",
+];
+
+const About = async () => {
+  const about = await getAboutContent();
+
+  console.log("about", about);
+
+  if (!about) return null;
+
+  const { headingMain, headingAccent, bio, currentlyItems } = about;
+
   return (
-    <section id="about" className="border-t border-border py-24 md:py-32">
-      <div className="mx-auto max-w-monograph px-6 lg:px-10">
-        <ScrollReveal>
-          <p className="label-meta mb-4">About</p>
-          <h2 className="font-heading text-4xl font-bold leading-tight text-foreground md:text-5xl">
-            The person behind the pixels
-          </h2>
-        </ScrollReveal>
-
-        <div className="mt-16 grid grid-cols-1 gap-16 lg:grid-cols-12">
-          <ScrollReveal className="lg:col-span-7" delay={80}>
-            <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
-              <p>
-                I'm Alex — a front-end developer who fell in love with the web
-                the moment I realized you could make a button feel like a real,
-                physical thing. For the past six years I've been obsessing over
-                the space where engineering meets aesthetics: the millisecond of
-                a transition, the weight of a typeface, the relief of a layout
-                that finally breathes.
-              </p>
-              <p>
-                My approach is simple —{" "}
-                <span className="text-foreground">systems with a soul.</span> I
-                believe great interfaces are invisible until they delight you. I
-                sweat the details most people scroll past, because those are the
-                ones your fingers remember.
-              </p>
-              <p>
-                When I'm not pushing pixels, I'm probably sketching type,
-                rearranging my desk for the third time this week, or trying to
-                explain to someone why a 1px border matters more than they
-                think.
-              </p>
-            </div>
+    <>
+      <section id="about" className="border-t border-border py-24 md:py-32">
+        <div className="mx-auto max-w-monograph px-6 lg:px-10">
+          <ScrollReveal>
+            <p className="label-meta mb-6">About</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-semibold leading-tight text-foreground ">
+              {headingMain}{" "}
+              {headingAccent && (
+                <span className="text-accent italic">{headingAccent}</span>
+              )}
+            </h2>
           </ScrollReveal>
 
-          {/* <ScrollReveal className="lg:col-span-5" delay={160}>
-            <div className="border border-border bg-card p-8 lg:p-10">
-              <p className="label-meta mb-8">Currently</p>
-              {items.length === 0 ? (
-                <div className="space-y-6">
-                  {Object.entries(TYPE_LABELS).map(([type, label]) => (
-                    <div key={type} className="border-t border-border pt-4 first:border-t-0 first:pt-0">
-                      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                        Status: {label}
-                      </p>
-                      <p className="mt-2 text-base text-foreground">—</p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {items.map((item) => (
-                    <div key={item.id} className="border-t border-border pt-4 first:border-t-0 first:pt-0">
-                      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                        Status: {item.label || TYPE_LABELS[item.type] || item.type}
-                      </p>
-                      <p className="mt-2 text-base text-foreground">{item.value}</p>
-                    </div>
-                  ))}
+          <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <ScrollReveal
+              delay={120}
+              className="lg:border-r lg:border-border lg:pr-12"
+            >
+              {currentlyItems?.length > 0 && (
+                <div className="mb-16">
+                  <p className="label-meta mb-6">Currently</p>
+                  <ul className="space-y-6">
+                    {currentlyItems.map((item, i) => (
+                      <li key={i}>
+                        <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                          {item.label}
+                        </p>
+                        <p className="mt-1.5 text-sm leading-relaxed text-foreground">
+                          {item.value}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
-            </div>
-          </ScrollReveal> */}
+
+              <div className="border border-border/50 p-6">
+                <p className="label-meta mb-6 text-xs">Principles</p>
+                <TextTicker items={PRINCIPLES} duration={5000} />
+              </div>
+            </ScrollReveal>
+
+            {bio && (
+              <ScrollReveal delay={200}>
+                <div className="[&_p]:text-lg [&_p]:leading-relaxed [&_p]:text-muted-foreground md:[&_p]:text-xl">
+                  <PortableText value={bio} />
+                </div>
+              </ScrollReveal>
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
