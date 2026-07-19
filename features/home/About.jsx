@@ -35,8 +35,6 @@ const PRINCIPLES = [
 const About = async () => {
   const about = await getAboutContent();
 
-  console.log("about", about);
-
   if (!about) return null;
 
   const { headingMain, headingAccent, bio, currentlyItems } = about;
@@ -78,10 +76,10 @@ const About = async () => {
                 </div>
               )}
 
-              <div className="border border-border/50 p-6">
+              {/* <div className="border border-border/50 p-6">
                 <p className="label-meta mb-6 text-xs">Principles</p>
                 <TextTicker items={PRINCIPLES} duration={5000} />
-              </div>
+              </div> */}
             </ScrollReveal>
 
             {bio && (
