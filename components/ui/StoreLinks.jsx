@@ -34,7 +34,7 @@ const StoreLinks = ({ project, variant = "buttons" }) => {
     );
     if (!badges.length) return null;
     return (
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+      <div className="mt-4 flex flex-col sm:flex-row items-stretch justify-center gap-2">
         {badges.map((link) => {
           const Logo =
             link.type === "appstore" ? AppStoreLogo : GoogleStoreLogo;
@@ -47,7 +47,7 @@ const StoreLinks = ({ project, variant = "buttons" }) => {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-foreground px-3 py-1.5 text-background transition-opacity hover:opacity-85"
+              className="flex w-full sm:w-auto justify-center items-center gap-2 rounded-md bg-foreground px-3 py-1.5 text-background transition-opacity hover:opacity-85"
             >
               <Logo className="h-6 w-6 shrink-0" />
               <span className="flex flex-col leading-none text-left">
@@ -80,7 +80,7 @@ const StoreLinks = ({ project, variant = "buttons" }) => {
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex h-11 items-center gap-2 px-6 text-sm font-medium text-foreground transition-colors ${
+            className={`flex w-full sm:w-auto justify-center h-11 items-center gap-2 px-6 text-base font-medium text-foreground transition-colors ${
               isPrimary
                 ? "border border-foreground hover:bg-foreground hover:text-background"
                 : "border border-border hover:border-foreground"

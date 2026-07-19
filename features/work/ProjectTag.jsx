@@ -1,7 +1,7 @@
 export const TechBadge = ({ children, className = "" }) => (
   <span
     className={`
-     border border-foreground/10 px-4 py-2 bg-muted/30 font-mono text-[11px] uppercase tracking-normal text-foreground/90 transition-colors leading-none
+     border border-foreground/10 px-4 py-2 bg-muted/30 font-mono text-[12px] uppercase tracking-normal text-foreground/90 transition-colors leading-none
       ${className}
     `}
   >
