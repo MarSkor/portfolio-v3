@@ -17,14 +17,19 @@ const Footer = () => {
           <div className="flex items-center gap-6">
             {[
               {
+                label: "Vol. 00",
+                year: "2021",
+                href: "https://fed-portfolio-v1.netlify.app",
+              },
+              {
                 label: "Vol. 01",
-                year: "2023",
-                href: "https://example.com/vol-01", //to be updated
+                year: "2022",
+                href: "https://marskor-portfolio-v1.netlify.app",
               },
               {
                 label: "Vol. 02",
-                year: "2024",
-                href: "https://example.com/vol-02", //to be updated
+                year: "2025",
+                href: "https://portfolio-v2-iota-sand.vercel.app",
               },
               { label: "Vol. 03", year: "2026", href: null },
             ].map((vol) =>
@@ -54,7 +59,7 @@ const Footer = () => {
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
             © {year} Martine Skorbakk
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             {FOOTER_LINKS.map((link) => (
               <Link
                 key={link.label}
@@ -66,7 +71,7 @@ const Footer = () => {
             ))}
           </div>
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            Built with a mug of cocoa
+            Built with a mug (or two) of cocoa
           </p>
         </section>
       </div>
