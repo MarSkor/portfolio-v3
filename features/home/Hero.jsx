@@ -125,7 +125,8 @@ const Hero = () => {
         >
           <span className="block">Hi. I'm Martine. A frontend developer.</span>
           <span className="block text-accent">
-            I'm engineering aesthetics on purpose.
+            I like interfaces that respect people's time and attention. Fast,
+            clear, and built for the person using it.
           </span>
         </motion.h1>
 
