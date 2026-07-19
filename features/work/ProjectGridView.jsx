@@ -23,7 +23,7 @@ const ProjectGridView = ({ projects }) => {
                   alt={project.thumbnail.alt || project.title}
                   width={800}
                   height={600}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="h-full w-full object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-105"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center">
