@@ -41,7 +41,7 @@ const ContactForm = () => {
 
   if (status === "success") {
     return (
-      <motion.div
+      <motion.section
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -70,13 +70,13 @@ const ContactForm = () => {
         >
           Send another message
         </button>
-      </motion.div>
+      </motion.section>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div>
+      <section>
         <label htmlFor="name" className="label-meta mb-2 block">
           Name
         </label>
@@ -90,8 +90,8 @@ const ContactForm = () => {
           className="w-full border border-border bg-transparent px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-foreground"
           placeholder="Your name"
         />
-      </div>
-      <div>
+      </section>
+      <section>
         <label htmlFor="email" className="label-meta mb-2 block">
           Email
         </label>
@@ -105,8 +105,8 @@ const ContactForm = () => {
           className="w-full border border-border bg-transparent px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-foreground"
           placeholder="you@example.com"
         />
-      </div>
-      <div>
+      </section>
+      <section>
         <label htmlFor="message" className="label-meta mb-2 block">
           Message
         </label>
@@ -120,12 +120,12 @@ const ContactForm = () => {
           className="w-full resize-none border border-border bg-transparent px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-foreground"
           placeholder="What's on your mind?"
         />
-      </div>
+      </section>
       {error && <p className="text-sm text-destructive">{error}</p>}
       <button
         type="submit"
         disabled={status === "sending"}
-        className="inline-flex h-11 items-center gap-2 border border-foreground px-6 text-sm font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-foreground hover:text-background hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.3)] disabled:opacity-50"
+        className="flex w-full h-12 items-center justify-center gap-2 bg-accent px-6 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90 hover:shadow-[0_8px_24px_-8px_hsla(var(--accent),0.5)] disabled:opacity-50 cursor-pointer"
       >
         <Send className="h-4 w-4" />
         {status === "sending" ? "Sending…" : "Send message"}
