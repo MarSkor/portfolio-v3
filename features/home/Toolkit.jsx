@@ -48,7 +48,7 @@ const Toolkit = async () => {
         </ScrollReveal>
 
         <ScrollReveal delay={80} className="mt-16">
-          <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((group, gi) => {
               const meta = CATEGORY_META[group.name];
               const Icon = meta?.icon || Code2;
