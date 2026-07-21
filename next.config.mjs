@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-  output: "export",
   reactCompiler: true,
   images: {
     formats: ["image/avif", "image/webp"],
@@ -16,3 +15,5 @@ const nextConfig = {
 };
 
 export default nextConfig;
+
+import("@opennextjs/cloudflare").then((m) => m.initOpenNextCloudflareForDev());
