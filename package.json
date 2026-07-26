@@ -16,7 +16,16 @@
     "@opennextjs/cloudflare": "^1.19.9",
     "next": "16.2.11",
     "react": "^19.1.7",
-    "react-dom": "^19.1.7"
+    "react-dom": "^19.1.7",
+    "@teispace/next-themes": "^2.0.4",
+    "@hookform/resolvers": "^5.4.0",
+    "@portabletext/react": "^6.2.0",
+    "@sanity/image-url": "^2.1.1",
+    "@uidotdev/usehooks": "^2.4.1",
+    "lucide-react": "^1.21.0",
+    "motion": "^12.42.0",
+    "react-intersection-observer": "^10.0.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
