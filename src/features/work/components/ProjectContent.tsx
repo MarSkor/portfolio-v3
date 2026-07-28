@@ -234,7 +234,7 @@ const SPAN_CLASSES: Record<"1" | "2" | "3", string> = {
 interface ProjectContentProps {
   slug: string;
 }
- 
+
 interface ContentSection {
   label: string;
   value: BlockContent;
@@ -251,7 +251,7 @@ const ProjectContent = async ({ slug }: ProjectContentProps) => {
     { label: "The Brief", value: project.brief },
     { label: "The Approach", value: project.approach },
     { label: "The Result", value: project.result },
-   ].filter((s): s is ContentSection => Boolean(s.value?.length));
+  ].filter((s): s is ContentSection => Boolean(s.value?.length));
 
   const cover = project.coverImage || project.thumbnail;
 
@@ -302,14 +302,14 @@ const ProjectContent = async ({ slug }: ProjectContentProps) => {
       <ProjectStats project={project} />
 
       {(project.overview || sections.length > 0) && (
-        <section className="py-16 md:py-20">
-          <div className="mx-auto max-w-prose-col px-6 lg:px-10">
+        <section className="container-x pb-16 md:pb-20 py-16 md:py-20">
+          <div className="mx-auto max-w-prose-col">
             <p className="label-meta mb-8">Overview</p>
 
             {project.overview && <PortableText value={project.overview} />}
 
             {sections.map((section, i) => (
-              <div
+              <section
                 key={section.label}
                 className={project.overview || i > 0 ? "mt-14" : ""}
               >
@@ -317,7 +317,7 @@ const ProjectContent = async ({ slug }: ProjectContentProps) => {
                   {section.label}
                 </h2>
                 <PortableText value={section.value} />
-              </div>
+              </section>
             ))}
           </div>
         </section>
