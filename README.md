@@ -134,7 +134,10 @@ features/
   work/              # project listing & detail components
   blog/              # blog listing & detail components
 lib/
-  sanity.ts          # all GROQ queries live here, typed against lib/types.ts
+  sanity/
+    client.ts        # Sanity client instance + config
+    image.ts         # urlFor() image URL builder
+    queries.ts       # all GROQ queries live here, typed against lib/types.ts
   types.ts           # TypeScript interfaces for every Sanity document/content shape
 ```
 
