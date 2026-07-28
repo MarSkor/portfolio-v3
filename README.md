@@ -2,9 +2,13 @@
   <img alt="Logo" src="./public/assets/images/logo.png" width="100" />
 </div>
 
+<div align="center">
+
 # Portfolio_v3
 
 A personal portfolio, journal, and project archive - built with Next.js, styled with Tailwind, and content-managed through Sanity.
+
+</div>
 
 <div align="center">
 
