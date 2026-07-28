@@ -2,15 +2,11 @@
   <img alt="Logo" src="./public/assets/images/logo.png" width="100" />
 </div>
 
-<div align="center">
-
 # Portfolio_v3
 
 A personal portfolio, journal, and project archive - built with Next.js, styled with Tailwind, and content-managed through Sanity.
 
-</div>
-
-<div align="center">
+**Companion repo:** [portfolio-v3-studio](https://github.com/MarSkor/portfolio-v3-studio) — the standalone Sanity Studio used to manage this site's content.
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)](https://react.dev)
@@ -19,7 +15,7 @@ A personal portfolio, journal, and project archive - built with Next.js, styled 
 [![Sanity](https://img.shields.io/badge/Sanity-CMS-F03E2F?logo=sanity&logoColor=white)](https://www.sanity.io)
 [![Deployed on Cloudflare](https://img.shields.io/badge/Deployed_on-Cloudflare_Workers-F38020?logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/workers/)
 
-</div>
+---
 
 ## About
 
@@ -55,13 +51,13 @@ This is my personal site - part portfolio, part journal, part playground for int
 
 - Node.js ≥ 20 (some dependencies request ≥ 24 - check `npm install` warnings)
 - A Sanity project (free tier is fine) - [create one here](https://www.sanity.io/manage)
-- Access to the companion [Sanity Studio repo](#sanity-studio) for editing content
+- Access to the companion [portfolio-v3-studio](https://github.com/MarSkor/portfolio-v3-studio) repo for editing content
 
 ### Setup
 
 ```bash
 # clone and install
-git clone <this-repo-url>
+git clone <https://github.com/MarSkor/portfolio-v3>
 cd portfolio-v3
 npm install
 
